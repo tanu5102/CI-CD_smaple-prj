@@ -70,4 +70,4 @@ jobs:
         echo "🎉 Website deployed successfully!"
         echo "✅ Tests passed"
         echo "🚀 Deployment completed"
-        echo "🌐 Your website should be live at: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+        echo "🌐 Your website should be live at: https://${{ github.tanu5102 }}.github.io/${{ github.event.CI-CD_smaple-prj }}"

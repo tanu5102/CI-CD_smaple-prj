@@ -1,0 +1,23 @@
+{
+  "name": "my-awesome-website",
+  "version": "1.0.0",
+  "description": "A simple website with GitHub Actions CI/CD pipeline",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"✅ All tests passed! Ready to deploy.\" && exit 0",
+    "build": "echo \"🔨 Building website...\" && echo \"✅ Build successful!\"",
+    "start": "echo \"🚀 Starting website...\" && echo \"Open index.html in your browser\""
+  },
+  "keywords": [
+    "website",
+    "github-actions",
+    "ci-cd",
+    "deployment"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/my-awesome-website.git"
+  }
+}

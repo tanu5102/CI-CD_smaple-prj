@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Awesome Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Welcome to My Website!</h1>
+            <p>This website was deployed using GitHub Actions CI/CD!</p>
+        </header>
+        
+        <main>
+            <section class="hero">
+                <h2>About This Project</h2>
+                <p>This is a simple website that demonstrates:</p>
+                <ul>
+                    <li>✅ Automatic deployment</li>
+                    <li>✅ GitHub Actions workflow</li>
+                    <li>✅ CI/CD pipeline in action</li>
+                </ul>
+            </section>
+            
+            <section class="features">
+                <div class="feature-card">
+                    <h3>🔧 Easy Setup</h3>
+                    <p>Just push your code and watch it deploy automatically!</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>⚡ Fast Deployment</h3>
+                    <p>Your changes go live in minutes, not hours.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>🛡️ Safe & Reliable</h3>
+                    <p>Automated testing ensures your site always works.</p>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Made with ❤️ and GitHub Actions</p>
+            <p id="timestamp"></p>
+        </footer>
+    </div>
+    
+    <script>
+        // Show when the page was loaded
+        document.getElementById('timestamp').textContent = 
+            'Last updated: ' + new Date().toLocaleString();
+    </script>
+</body>
+</html>

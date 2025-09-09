@@ -1,0 +1,73 @@
+name: 🚀 Deploy My Awesome Website
+
+# When should this run?
+on:
+  push:
+    branches: [ main ]  # Run when code is pushed to main branch
+  pull_request:
+    branches: [ main ]  # Run when someone creates a pull request
+
+# What should happen?
+jobs:
+  test:
+    name: ✅ Test Website
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Step 1: Get our code
+    - name: 📥 Get the code
+      uses: actions/checkout@v4
+    
+    # Step 2: Setup Node.js (needed for npm commands)
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    
+    # Step 3: Install dependencies (if any)
+    - name: 📦 Install dependencies
+      run: npm install
+    
+    # Step 4: Run tests
+    - name: 🧪 Run tests
+      run: npm test
+    
+    # Step 5: Build the website
+    - name: 🔨 Build website
+      run: npm run build
+
+  deploy:
+    name: 🌐 Deploy to GitHub Pages
+    needs: test  # Only run if tests pass!
+    runs-on: ubuntu-latest
+    
+    # Only deploy when pushing to main branch (not on pull requests)
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    # Step 1: Get our code
+    - name: 📥 Get the code
+      uses: actions/checkout@v4
+    
+    # Step 2: Deploy to GitHub Pages
+    - name: 🚀 Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./  # Deploy the root directory
+        cname: # Add your custom domain here if you have one
+
+  # Optional: Send a success message
+  notify:
+    name: 📢 Notify Success
+    needs: [test, deploy]
+    runs-on: ubuntu-latest
+    if: success()
+    
+    steps:
+    - name: 🎉 Success message
+      run: |
+        echo "🎉 Website deployed successfully!"
+        echo "✅ Tests passed"
+        echo "🚀 Deployment completed"
+        echo "🌐 Your website should be live at: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"

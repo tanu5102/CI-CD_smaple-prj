@@ -85,7 +85,7 @@ jobs:
     # Step 5: Deploy to GitHub Pages
     - name: 🚀 Deploy to GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v2
+      uses: actions/deploy-pages@v4
 
   # Optional: Send a success message
   notify:

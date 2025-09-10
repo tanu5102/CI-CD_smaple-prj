@@ -7,6 +7,12 @@ on:
   pull_request:
     branches: [ main ]  # Run when someone creates a pull request
 
+# Add permissions for GitHub Pages deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 # What should happen?
 jobs:
   test:
@@ -17,21 +23,21 @@ jobs:
     # Step 1: Get our code
     - name: 📥 Get the code
       uses: actions/checkout@v4
-    
+      
     # Step 2: Setup Node.js (needed for npm commands)
     - name: 🔧 Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-    
+        
     # Step 3: Install dependencies (if any)
     - name: 📦 Install dependencies
       run: npm install
-    
+      
     # Step 4: Run tests
     - name: 🧪 Run tests
       run: npm test
-    
+      
     # Step 5: Build the website
     - name: 🔨 Build website
       run: npm run build
@@ -44,18 +50,42 @@ jobs:
     # Only deploy when pushing to main branch (not on pull requests)
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     
+    # Set up GitHub Pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
     steps:
     # Step 1: Get our code
     - name: 📥 Get the code
       uses: actions/checkout@v4
-    
-    # Step 2: Deploy to GitHub Pages
-    - name: 🚀 Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+      
+    # Step 2: Setup Node.js and build
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./  # Deploy the root directory
-        cname: # Add your custom domain here if you have one
+        node-version: '18'
+        
+    - name: 📦 Install dependencies
+      run: npm install
+      
+    - name: 🔨 Build website
+      run: npm run build
+      
+    # Step 3: Setup Pages
+    - name: 📄 Setup Pages
+      uses: actions/configure-pages@v3
+      
+    # Step 4: Upload artifact
+    - name: 📤 Upload artifact
+      uses: actions/upload-pages-artifact@v2
+      with:
+        path: './dist'  # Change this to your build output directory
+        
+    # Step 5: Deploy to GitHub Pages
+    - name: 🚀 Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2
 
   # Optional: Send a success message
   notify:
@@ -70,4 +100,4 @@ jobs:
         echo "🎉 Website deployed successfully!"
         echo "✅ Tests passed"
         echo "🚀 Deployment completed"
-        echo "🌐 Your website should be live at: https://${{ github.tanu5102 }}.github.io/${{ github.event.CI-CD_smaple-prj }}"
+        echo "🌐 Your website should be live at: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
